@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="container">
+  <button class="btn btn-default btn-lg " id="pickfiles" href="#">
+    <i class="glyphicon glyphicon-plus"></i>
+    <span>选择文件</span>
+  </button>
+  <div id="list"></div>
+</div>
+
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/plupload.min.js"></script>
+<script src="../../js/qiniu.min.js"></script>
+
+<script>
+  var uploader = Qiniu.uploader({
+    domain: 'oysblrafu.bkt.clouddn.com',    //bucket 域名，下载资源时用到，**必需**
+    runtimes: 'html5,html4',                //上传模式,依次退化
+    browse_button: 'pickfiles',             //上传选择的点选按钮，**必需**
+    uptoken_url: '/uptoken',                //Ajax请求upToken的Url，**强烈建议设置**（服务端提供）
+    get_new_uptoken: false,                 //设置上传文件的时候是否每次都重新获取新的token
+    max_file_size: '100mb',                 //最大文件体积限制
+    chunk_size: '4mb',                      //分块上传时，每片的体积
+    max_retries: 2,                         //上传失败最大重试次数
+    container: 'container',                 //上传区域DOM ID，默认是browser_button的父元素，
+    drop_element: 'container',              //拖曳上传区域元素的ID，拖曳文件或文件夹后可触发上传
+    dragdrop: true,                         //开启可拖曳上传
+    auto_start: true,                       //选择文件后自动上传，若关闭需要自己绑定事件触发上传
+    init: {
+      'FilesAdded': function (up, files) {
+        plupload.each(files, function (file) {
+        });
+      },
+      'BeforeUpload': function (up, file) {
+      },
+      'UploadProgress': function (up, file) {
+      },
+      'FileUploaded': function (up, file, info) {
+        //up.getOption('domain') + eval('(' + info.response + ')')['key']
+        var url = 'http://'
+        url += up.getOption('domain')
+        url += '/'
+        url += eval('(' + info.response + ')')['key']
+        $('#list').append(url)
+        $('#list').append('<br>')
+        if (file.type.indexOf('image') >= 0) {
+          $('#list').append('<img src="' + url + '" width="100px" height="80px">')
+          $('#list').append('<br>')
+        }
+      },
+      'Error': function (up, err, errTip) {
+      },
+      'UploadComplete': function () {
+      },
+      'Key': function (up, file) {
+        //默认可以自定义上传后的文件名
+        return file.type + '/' + file.name;
+      }
+    }
+  });
+</script>
+</body>
+</html>

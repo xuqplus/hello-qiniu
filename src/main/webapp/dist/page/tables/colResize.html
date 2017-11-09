@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+<div class="center">
+
+  <table id="normal" border="1px">
+    <tr>
+      <th>header</th>
+      <th>header</th>
+      <th>header</th>
+    </tr>
+    <tr>
+      <td class="left">cell</td>
+      <td>cell</td>
+      <td class="right">cell</td>
+    </tr>
+    <tr>
+      <td class="left">cell</td>
+      <td>cell</td>
+      <td class="right">cell</td>
+    </tr>
+    <tr>
+      <td class="left bottom">cell</td>
+      <td class="bottom">cell</td>
+      <td class="bottom right">cell</td>
+    </tr>
+  </table>
+
+
+  <table id="flex" border="1px">
+    <tr>
+      <th>header</th>
+      <th>header</th>
+      <th>header</th>
+    </tr>
+    <tr>
+      <td class="left">cell</td>
+      <td>cell</td>
+      <td class="right">cell</td>
+    </tr>
+    <tr>
+      <td class="left">cell</td>
+      <td>cell</td>
+      <td class="right">cell</td>
+    </tr>
+    <tr>
+      <td class="left bottom">cell</td>
+      <td class="bottom">cell</td>
+      <td class="bottom right">cell</td>
+    </tr>
+  </table>
+
+
+  <div class="scroll" border="1px">
+    <table id="overflow">
+      <tr>
+        <th>header</th>
+        <th>header</th>
+        <th>header</th>
+      </tr>
+      <tr>
+        <td class="left">cell</td>
+        <td>cell</td>
+        <td class="right">cell</td>
+      </tr>
+      <tr>
+        <td class="left">cell</td>
+        <td>cell</td>
+        <td class="right">cell</td>
+      </tr>
+      <tr>
+        <td class="left bottom">cell</td>
+        <td class="bottom">cell</td>
+        <td class="bottom right">cell</td>
+      </tr>
+    </table>
+  </div>
+
+  <table id="disabled" border="1px">
+    <tr>
+      <th>header</th>
+      <th>header</th>
+      <th class="disabled">disabled</th>
+    </tr>
+    <tr>
+      <td class="left">cell</td>
+      <td>cell</td>
+      <td class="right disabled">disabled</td>
+    </tr>
+    <tr>
+      <td class="left">cell</td>
+      <td>cell</td>
+      <td class="right disabled">disabled</td>
+    </tr>
+    <tr>
+      <td class="left bottom">cell</td>
+      <td class="bottom">cell</td>
+      <td class="bottom right disabled">disabled</td>
+    </tr>
+  </table>
+  <br/>
+
+</div>
+
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/colResizable-1.6.min.js"></script>
+
+<script type="text/javascript">
+  $(function () {
+    $("#normal").colResizable({
+      liveDrag: true,
+      gripInnerHtml: "<div class='grip'></div>",
+      draggingClass: "dragging",
+      resizeMode: 'fit'
+    });
+
+    $("#flex").colResizable({
+      liveDrag: true,
+      gripInnerHtml: "<div class='grip'></div>",
+      draggingClass: "dragging",
+      resizeMode: 'flex'
+    });
+
+    $("#overflow").colResizable({
+      liveDrag: true,
+      gripInnerHtml: "<div class='grip'></div>",
+      draggingClass: "dragging",
+      resizeMode: 'overflow'
+    });
+
+    $("#disabled").colResizable({
+      liveDrag: true,
+      gripInnerHtml: "<div class='grip'></div>",
+      draggingClass: "dragging",
+      resizeMode: 'overflow',
+      disabledColumns: [2]
+    });
+  });
+</script>
+</body>
+</html>
