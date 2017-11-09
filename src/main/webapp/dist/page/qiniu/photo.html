@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>photo</title>
+</head>
+<body>
+<div id="container">
+  <div id="list"></div>
+</div>
+
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/plupload.min.js"></script>
+<script src="../../js/qiniu.min.js"></script>
+
+<script>
+  var Q = Q || {}
+
+  Q.get = function (url) {//异步转同步
+    var result
+    $.ajax({
+      url: url,
+      async: false,
+      success: function (data) {
+        result = data
+      }
+    })
+    return result
+  }
+
+  var domain = Q.get('/domain')
+  var imageList = Q.get('/filelist?prefix=image')
+
+  for (var image in imageList) {
+    console.log(imageList[image])
+  }
+
+</script>
+</body>
+</html>

@@ -20,14 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class QiniuApiController {
 
-  @Value("${qiniu.xuqplus.accessKey}")
+  @Value("${qiniu.accessKey}")
   private String accessKey;
 
-  @Value("${qiniu.xuqplus.secretKey}")
+  @Value("${qiniu.secretKey}")
   private String secretKey;
 
-  @Value("${qiniu.xuqplus.bucket}")
+  @Value("${qiniu.bucket.xuqplus}")
   private String bucket;
+
+  @Value("${qiniu.bucket.xuqplus.domain}")
+  private String domain;
 
   @ApiOperation(value = "生成uptoken")
   @RequestMapping(value = "uptoken", method = RequestMethod.GET)
@@ -35,6 +38,12 @@ public class QiniuApiController {
     return new HashMap() {{
       put("uptoken", Auth.create(accessKey, secretKey).uploadToken(bucket));
     }};
+  }
+
+  @ApiOperation(value = "获取文件域名")
+  @RequestMapping(value = "domain", method = RequestMethod.GET)
+  public String getDomain() {
+    return domain;
   }
 
   @ApiOperation(value = "文件列表")
