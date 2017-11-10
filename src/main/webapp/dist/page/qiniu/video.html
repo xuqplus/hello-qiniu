@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        name="viewport">
+
+  <link rel="stylesheet" href="../../css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../css/admin-lte.min.css">
+  <link rel="stylesheet" href="../../css/font-awesome.min.css">
+  <link rel="stylesheet" href="../../css/skins.min.css">
+  <link rel="stylesheet" href="../../css/ionicons.min.css">
+
+  <!--HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <title>audio</title>
+</head>
+<body>
+<div>
+  <div class="row">
+    <div class="content" id="list">
+
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="box-body">
+            <video src="../../audio/80s测试短片_bd.mp4" controls="controls"></video>
+          </div>
+          <div class="card-footer text-green">
+            示例视频 - 80s测试短片_bd.mp4
+            <div class="pull-right">
+              <small>
+                <a href=""><i class="fa fa-heart-o text-red"></i></a>
+                &nbsp;
+                <a href=""><i class="fa fa-commenting-o text-green"></i></a>
+                &nbsp;
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/plupload.min.js"></script>
+<script src="../../js/qiniu.min.js"></script>
+<script>
+  var Q = Q || {}
+  Q.get = function (url) {
+    var result
+    $.ajax({
+      async: false,
+      url: url,
+      success: function (data) {
+        result = data
+      }
+    })
+    return result
+  }
+  var domain = Q.get('/domain')
+  var filelist = Q.get('/filelist?prefix=video')
+  console.log(domain)
+
+  Q.template = '\n'
+      + '      <div class="col-sm-12">\n'
+      + '        <div class="card">\n'
+      + '          <div class="box-body">\n'
+      + '            <video src="{{url}}" controls="controls"></video>\n'
+      + '          </div>\n'
+      + '          <div class="card-footer text-green">\n'
+      + '            {{key}}\n'
+      + '            <div class="pull-right">\n'
+      + '              <small>\n'
+      + '                <a href=""><i class="fa fa-heart-o text-red"></i></a>\n'
+      + '                &nbsp;\n'
+      + '                <a href=""><i class="fa fa-commenting-o text-green"></i></a>\n'
+      + '                &nbsp;\n'
+      + '              </small>\n'
+      + '            </div>\n'
+      + '          </div>\n'
+      + '        </div>\n'
+      + '      </div>'
+
+  for (var i in filelist) {
+    var key = filelist[i].key
+    var url = 'http://' + domain + '/' + key
+    $('#list').append(Q.template.replace('{{key}}', key).replace('{{url}}', url))
+  }
+</script>
+</body>
+</html>
