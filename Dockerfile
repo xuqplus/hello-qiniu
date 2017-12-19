@@ -1,4 +1,4 @@
-FROM alpine
+FROM alpine:latest
 
 RUN apk update && apk add openjdk8-jre
 COPY target/*.jar /app.jar
